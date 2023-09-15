@@ -18,13 +18,17 @@ class Pojisteny(models.Model):
     ulice = models.CharField(max_length=200)
     mesto = models.CharField(max_length=200)
     psc = models.IntegerField(default=0)
-    tel = models.IntegerField(default=0)
+    tel = models.CharField(max_length=15)
     email = models.CharField(max_length=180)
     pojisteni = models.ManyToManyField(Pojisteni, through='PojisteniPojisteny')
 
     def __str__(self):
         return "{} {}| {} | {}".format(self.jmeno ,self.prijmeni, self.email, self.tel)
 
+    def formatted_tel(self):
+        number = self.tel
+        formatted_number = ' '.join([number[i:i + 3] for i in range(0, len(number), 3)])
+        return f'{formatted_number}'
     class Meta:
         verbose_name = "Pojištěný"
         verbose_name_plural = "Pojištěnci"

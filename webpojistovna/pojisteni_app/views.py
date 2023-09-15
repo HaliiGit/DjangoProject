@@ -218,6 +218,7 @@ class PojistenyCurrent(generic.DetailView):
                 else:
                     self.get_object().delete()
             return redirect("pojistenci_index")
+
 class PojistenyIndex(generic.ListView):
 
     template_name = "pojisteni_app/pojisteny_index.html"

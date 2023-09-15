@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+{% load humanize %}
     <nav>
         <div class="menu">
             <div id="logo">
@@ -40,7 +41,7 @@
         <table class="border border-white">
             <tbody>
                 <tr><td class="border border-white">{{ pojisteny.ulice }}</td><td class="border border-white text-white">+++++++++++++++++</td> <td class="border border-white">{{ pojisteny.email }}</td></tr>
-                <tr><td class="border border-white">{{ pojisteny.mesto }}</td><td class="border border-white text-white">+++++++++++++++++</td> <td class="border border-white">{{ pojisteny.tel }}</td></tr>
+                <tr><td class="border border-white">{{ pojisteny.mesto }}</td><td class="border border-white text-white">+++++++++++++++++</td> <td class="border border-white">{{ pojisteny.formatted_tel }}</td></tr>
                 <tr><td class="border border-white">{{ pojisteny.psc }}</td></tr>
             </tbody>
         </table>
@@ -59,7 +60,7 @@
                 {% for pojisteni_pojisteny in pojisteny.pojistenipojisteny_set.all %}
                 <tr>
                     <td>{{ pojisteni_pojisteny.pojisteni.typ_pojisteni }}</a></td>
-                    <td>{{ pojisteni_pojisteny.cena }}</td>
+                    <td>{{ pojisteni_pojisteny.cena|intcomma }} Kč</td>
                     <td>
                     {% if user.is_authenticated %}
                     <form method="POST">

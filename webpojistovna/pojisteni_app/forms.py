@@ -37,15 +37,11 @@ class PojisteniPojistenyForm(forms.ModelForm):
             "pojisteny": "Pojištěný",
             "cena": "Cena",
             "predmet_pojisteni": "Předmět pojištění",
-            "platnost_od": "Platnost od (rok-mesic-den) ",
-            "platnost_do": "Platnost do (rok-mesic-den) ",
+            "platnost_od": "Platnost od: |rok-mesic-den| ",
+            "platnost_do": "Platnost do: |rok-mesic-den|",
         }
 
-    def __init__(self, *args, **kwargs):
-        super(PojisteniPojistenyForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-        )
+
 
 class UdalostiForm(forms.ModelForm):
 

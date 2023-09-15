@@ -58,7 +58,7 @@
                     <td>{{ udalost.cislo_pojistne_smlouvy }}</td>
                     <td>{{ udalost.pojisteni }}</td>
                     <td>{{ udalost.popis_udalosti }}</td>
-                    <td>{{ udalost.datum_udalosti }}</td>
+                    <td>{{ udalost.datum_udalosti|date:"j. n. Y" }}</td>
                     <form method="POST">
                     {% csrf_token %}
                     <td>
