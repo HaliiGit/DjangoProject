@@ -1,0 +1,3 @@
+# DjangoProject
+Django project PojištěníApp
+
