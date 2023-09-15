@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <nav>
+        <div class="menu">
+            <div id="logo">
+            <h3>PojištěníApp</h3>
+            </div>
+            <div class="flex_box">
+                <div class="nav_item"><a href="{% url 'pojistenci_index' %}">Pojištěnci</a></div>
+                <div class="nav_item"><a href="{% url 'pojisteni_index' %}" class="aktivni">Pojištění</a></div>
+                <div class="nav_item"><a href="{% url 'udalosti' %}">Události</a></div>
+                <div class="nav_item"><a href="{% url 'about' %}">O aplikaci...</a></div>
+            </div>
+            <div class="flex_box_two">
+                {% if user.is_admin %}<div class="nav_item_two"> Admin </div>
+                {% else %}
+                <div class="nav_item_two"> {{ request.user.email }} </div>
+                {% endif %}
+                {% if user.is_authenticated %}<div class="nav_item_two"><a href="{% url 'logout' %}">Odhlásit</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'registrace' %}">Registrace</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'login' %}">Login</a></div>{% endif %}
+            </div>
+        </div>
+    </nav>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <strong><span style="color: #ff564f">Error: {{message}}</span></strong>
+                {% elif message.tags == "info" %}
+                    <strong><span style="color: #fff64f">Info: {{message}}</span></strong>
+                {% else %}
+                    <strong><span style="color: #73E460">Zpáva: {{message}}</span></strong>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    <div class="content">
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit">
+</form>
+{% endblock %}

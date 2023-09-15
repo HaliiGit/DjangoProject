@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <nav>
+        <div class="menu">
+            <div id="logo">
+            <h3>PojištěníApp</h3>
+            </div>
+            <div class="flex_box">
+                <div class="nav_item"><a href="{% url 'pojistenci_index' %}" >Pojištěnci</a></div>
+                <div class="nav_item"><a href="{% url 'pojisteni_index' %}">Pojištění</a></div>
+                <div class="nav_item"><a href="{% url 'udalosti' %}" class="aktivni">Události</a></div>
+                <div class="nav_item"><a href="{% url 'about' %}">O aplikaci...</a></div>
+            </div>
+            <div class="flex_box_two">
+                {% if user.is_admin %}<div class="nav_item_two"> Admin </div>
+                {% else %}
+                <div class="nav_item_two"> {{ request.user.email }} </div>
+                {% endif %}
+                {% if user.is_authenticated %}<div class="nav_item_two"><a href="{% url 'logout' %}">Odhlásit</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'registrace' %}">Registrace</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'login' %}">Login</a></div>{% endif %}
+            </div>
+        </div>
+    </nav>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <strong><span style="color: #ff564f">Error: {{message}}</span></strong>
+                {% elif message.tags == "info" %}
+                    <strong><span style="color: #fff64f">Info: {{message}}</span></strong>
+                {% else %}
+                    <strong><span style="color: #73E460">Zpáva: {{message}}</span></strong>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    <div class="content">
+    <h1>Události</h1>
+    <a href="{% url 'udalosti_form' %}">
+        <div class="container">
+            <button action="{% url 'udalosti_form' %}" type="submit" class="btn btn-primary btn-lg">Nová událost</button>
+        </div>
+    </a>
+    {% if user.is_authenticated %}
+    <table class="table table-bordered border-black custom-table">
+        <thead>
+            <tr>
+                <th>č. pojistné smlouvy</th>
+                <th>Typ pojištění</th>
+                <th>Popis události</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for udalost in udalosti %}
+                <tr>
+                    <td>{{ udalost.cislo_pojistne_smlouvy }}</td>
+                    <td>{{ udalost.pojisteni }}</td>
+                    <td>{{ udalost.popis_udalosti }}</td>
+                    <td>{{ udalost.datum_udalosti }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <ul class="pagination justify-content-center">
+        {% if udalost.has_previous %}
+            <li><a href="?page={{ pojisteni.previous_page_number }}" class="btn btn-light text-muted">Předchozí</a></li>
+        {% endif %}
+        {% for i in udalost.paginator.page_range %}
+          {% if page_obj.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only"></span></span></li>
+          {% else %}
+            <li class="page-item"><a class="page-link btn btn-light" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if udalost.has_next %}
+            <li><a href="?page={{ pojisteni.next_page_number }}" class="btn btn-light text-primary">Další</a></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
+    <div class="col-md-4"></div>
+{% endblock %}

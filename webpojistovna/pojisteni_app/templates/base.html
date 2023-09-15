@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type = "text/css"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pojišťovna Web</title>
+</head>
+<body>
+    {% block content %}
+    <nav>
+        <div class="menu">
+            <div id="logo">
+            <h3>PojištěníApp</h3>
+            </div>
+            <div class="flex_box">
+                <div class="nav_item"><a href="{% url 'pojistenci_index' %}" class="aktivni">Pojištěnci</a></div>
+                <div class="nav_item"><a href="{% url 'pojisteni_index' %}">Pojištění</a></div>
+                <div class="nav_item"><a href="{% url 'novy_pojisteny' %}">Události</a></div>
+                <div class="nav_item"><a href="{% url 'about' %}">O aplikaci...</a></div>
+            </div>
+            <div class="flex_box_two">
+                {% if user.is_admin %}<div class="nav_item_two"> Admin </div>
+                {% else %}
+                <div class="nav_item_two"> {{ request.user.email }} </div>
+                {% endif %}
+                {% if user.is_authenticated %}<div class="nav_item_two"><a href="{% url 'logout' %}">Odhlásit</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'registrace' %}">Registrace</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'login' %}">Login</a></div>{% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="text-center">{{ request.user.email }}</div>
+    {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <strong><span style="color: #ff564f">Error: {{message}}</span></strong>
+                {% elif message.tags == "info" %}
+                    <strong><span style="color: #fff64f">Info: {{message}}</span></strong>
+                {% else %}
+                    <strong><span style="color: #73E460">Zpáva: {{message}}</span></strong>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    <div class="content">
+
+
+    {% endblock %}
+    </div>
+    <footer>2023
+    </footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+    <nav>
+        <div class="menu">
+            <div id="logo">
+            <h3>PojištěníApp</h3>
+            </div>
+            <div class="flex_box">
+                <div class="nav_item"><a href="{% url 'pojistenci_index' %}" class="aktivni">Pojištěnci</a></div>
+                <div class="nav_item"><a href="{% url 'pojisteni_index' %}">Pojištění</a></div>
+                <div class="nav_item"><a href="{% url 'udalosti' %}">Události</a></div>
+                <div class="nav_item"><a href="{% url 'about' %}">O aplikaci...</a></div>
+            </div>
+            <div class="flex_box_two">
+                {% if user.is_admin %}<div class="nav_item_two"> Admin </div>
+                {% else %}
+                <div class="nav_item_two"> {{ request.user.email }} </div>
+                {% endif %}
+                {% if user.is_authenticated %}<div class="nav_item_two"><a href="{% url 'logout' %}">Odhlásit</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'registrace' %}">Registrace</a></div>{% endif %}
+                {% if not user.is_authenticated %}<div class="nav_item_three"><a href="{% url 'login' %}">Login</a></div>{% endif %}
+            </div>
+        </div>
+    </nav>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <strong><span style="color: #ff564f">Error: {{message}}</span></strong>
+                {% elif message.tags == "info" %}
+                    <strong><span style="color: #fff64f">Info: {{message}}</span></strong>
+                {% else %}
+                    <strong><span style="color: #73E460">Zpáva: {{message}}</span></strong>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    <div class="content">
+        <img class="profile_pic" src="{% static 'images/profile.png' %}" alt="profil">
+        <h2> {{ pojisteny.jmeno }} {{ pojisteny.prijmeni }} <span class="glyphicon glyphicon-erase"></span></h2>
+        <table class="border border-white">
+            <tbody>
+                <tr><td class="border border-white">{{ pojisteny.ulice }}</td><td class="border border-white text-white">+++++++++++++++++</td> <td class="border border-white">{{ pojisteny.email }}</td></tr>
+                <tr><td class="border border-white">{{ pojisteny.mesto }}</td><td class="border border-white text-white">+++++++++++++++++</td> <td class="border border-white">{{ pojisteny.tel }}</td></tr>
+                <tr><td class="border border-white">{{ pojisteny.psc }}</td></tr>
+            </tbody>
+        </table>
+        <div class="spm">
+            <h2>Sjednaná pojištění</h2>
+        </div>
+        <table class="table table-bordered border-black custom-table">
+            <thead>
+                <tr>
+                    <th>Pojištění</th>
+                    <th>Částka</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pojisteni_pojisteny in pojisteny.pojistenipojisteny_set.all %}
+                <tr>
+                    <td>{{ pojisteni_pojisteny.pojisteni.typ_pojisteni }}</a></td>
+                    <td>{{ pojisteni_pojisteny.cena }}</td>
+                    <td>
+                    {% if user.is_authenticated %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button name="edit_pojisteni" class="edit-button text-white">Editovat</button>
+                        <button name="delete_pojisteni" class="remove-button" value="{{ pojisteni_pojisteny.id }}">Odstranit</button>
+                    </form>
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-light text-muted">Předchozí</a></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only"></span></span></li>
+              {% else %}
+                <li class="page-item"><a class="page-link btn btn-light" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-light text-primary">Další</a></li>
+            {% endif %}
+          </ul>
+    {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="d-flex gap-3 justify-content-center">
+                {% if user.is_admin %}<button name="nove" class="btn btn-primary btn-lg btn-primary mt-5 text-white">Přidat pojištění</button> <button name="edit" class="btn btn-primary btn-lg btn-warning text-white mt-5">Editovat pojištěnce</button>      <button name="delete" class="btn btn-primary btn-lg btn-danger text-white mt-5">Odstranit pojištěnce</button>{% endif %}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,210 @@
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#logo {
+    color: white;
+    margin-right: 10px;
+    height: 70px;
+}
+
+.profile_pic{
+    width: 12%;
+    height: auto%;
+    float: left;
+    margin-right: 30px;
+}
+
+.spm {
+    margin-top: 89px;
+}
+
+.spacer_one {
+    padding-left: 10rem;
+}
+
+.mode-custom {
+    background-color: #ECE2B3;
+    color: #6AD934;
+}
+
+
+nav{
+    width: 100%;
+    height: 70px;
+    background-color: #3e4144;
+    color: white;
+}
+
+nav .menu{
+  max-width: auto;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 18px;
+}
+
+.flex_box_two{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
+.spacer {
+    margin-left: 90px;
+}
+
+
+.nav_item_two{
+    height: 100px;
+    max-width: 100%;
+    text-align: center;
+    line-height: 70px;
+    vertical-align: middle;
+    color: white;
+    margin-right: 10px;
+    flex: 0 0 auto;
+
+}
+
+.flex_box_two a{
+    text-decoration: none;
+    color: #9C9C9A;
+}
+
+.nav_item_three{
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    line-height: 70px;
+    vertical-align: middle;
+    color: white;
+
+}
+
+.flex_box{
+    width: 100%;
+    height: auto !important;
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
+}
+.flex_box a{
+    text-decoration: none;
+    color: #9C9C9A;
+}
+.nav_item a.aktivni {
+    color: white !important;
+}
+
+.aktivni {
+    color: white !important;
+}
+
+}
+.flex_box a:hover{
+    text-decoration: none;
+    color: white;
+}
+.nav_item{
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    line-height: 70px;
+    vertical-align: middle;
+    color: white;
+}
+.content{
+    width: 80%;
+    margin: auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+footer{
+    position: fixed;
+    width: 100%;
+    height: 70;
+    background-color: #3e4144;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    bottom: 0;
+
+}
+
+.custom-btn {
+    margin-left: 10px;
+}
+
+.my-custom-button {
+    background-color: #3498db !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border-radius: 6px !important;
+    border: none !important;
+
+}
+
+.edit-button {
+    background-color: #C64011 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 6px 15px !important;
+
+}
+
+.remove-button{
+    background-color: #DAB925 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 6px 15px !important;
+}
+
+
+.container {
+    text-align: center;
+}
+
+.doprava{
+    text-align: right !important;
+}
+
+.custom-table {
+    margin-top: 40px !important;
+}
+
+.custom-table th, td {
+    border: 1px solid !important;
+}
+
+.custom-table td, .custom-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+
+.custom-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+.custom-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.contact-info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+
