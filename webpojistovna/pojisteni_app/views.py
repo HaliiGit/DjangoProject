@@ -91,6 +91,48 @@ class PojisteniEdit(LoginRequiredMixin, generic.edit.CreateView):
             return redirect("pojisteny_detail", pk=pojisteni.id)
         return render(request, self.template_name, {"form": form})
 
+class UdalostiEdit(LoginRequiredMixin, generic.edit.CreateView):
+    form_class = UdalostiForm
+    template_name = "pojisteni_app/udalosti_create.html"
+
+    def get(self, request, pk):
+        if not request.user.is_admin:
+            messages.info(request, "Nemáte práva pro úpravu události.")
+            return redirect("udalosti")
+        try:
+            udalosti = Udalosti.objects.get(pk=pk)
+        except:
+            messages.error(request, "Tato událost neexistuje!")
+            return redirect("udalosti_form")
+        form = self.form_class(instance=udalosti)
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, pk):
+        if not request.user.is_admin:
+            messages.info(request, "Nemáte práva pro úpravu události.")
+            return redirect("udalosti_form")
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            cislo_pojistne_smlouvy = form.cleaned_data["cislo_pojistne_smlouvy"]
+            pojisteni = form.cleaned_data["pojisteni"]
+            popis_udalosti = form.cleaned_data["popis_udalosti"]
+            datum_udalosti = form.cleaned_data["datum_udalosti"]
+
+            try:
+                udalost = Udalosti.objects.get(pk=pk)
+            except:
+                messages.error(request, "Tato událost neexistuje!")
+                return redirect("udalosti_form")
+            udalost.cislo_pojistne_smlouvy
+            udalost.pojisteni
+            udalost.popis_udalosti
+            udalost.datum_udalosti
+            pojisteni.save()
+            return redirect("udalosti_form")
+        return render(request, self.template_name, {"form": form})
+
+
 class PojisteniPojistenyEdit(LoginRequiredMixin, generic.edit.CreateView):
     form_class = PojisteniPojistenyForm
     template_name = "pojisteni_app/pp_create.html"
@@ -259,6 +301,26 @@ class UdalostIndex(generic.ListView):
     def get_queryset(self):
         queryset = Udalosti.objects.all().order_by("-id")
         return queryset
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            if "edit" in request.POST:
+                udalost_id = request.POST.get("pk")
+                return redirect("edit_udalost", pk=udalost_id)
+
+            elif "delete" in request.POST:
+                if not request.user.is_admin:
+                    messages.info(request, "Nemáte práva pro smazání události.")
+                else:
+                    udalosti_id = request.POST.get("pk")
+                    if udalosti_id:
+                        udalost = get_object_or_404(Udalosti, pk=udalosti_id)
+                        udalost.delete()
+                        messages.success(request, "Událost byla smazána.")
+                    else:
+                        messages.error(request, "Nebylo poskytnuto platné ID událost.")
+
+            return redirect("udalosti")
 
 class PojistenyCreate(LoginRequiredMixin,generic.edit.CreateView):
 

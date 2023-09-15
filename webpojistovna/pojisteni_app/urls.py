@@ -19,5 +19,6 @@ urlpatterns = [
     path("<int:pk>/edit/", views.PojistenyEdit.as_view(), name="edit_pojisteny"),
     path("<int:pk>/edit_pojisteni/", views.PojisteniEdit.as_view(), name="edit_pojisteni"),
     path("<int:pk>/edit_pp/", views.PojisteniPojistenyEdit.as_view(), name="edit_pp"),
+    path("<int:pk>/edit_udalost/", views.UdalostiEdit.as_view(), name="edit_udalost"),
 
 ]

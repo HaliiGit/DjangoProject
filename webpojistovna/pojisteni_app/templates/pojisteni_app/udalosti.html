@@ -49,6 +49,7 @@
                 <th>Typ pojištění</th>
                 <th>Popis události</th>
                 <th>Datum</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -58,6 +59,14 @@
                     <td>{{ udalost.pojisteni }}</td>
                     <td>{{ udalost.popis_udalosti }}</td>
                     <td>{{ udalost.datum_udalosti }}</td>
+                    <form method="POST">
+                    {% csrf_token %}
+                    <td>
+                        <input type="hidden" name="pk" value="{{ udalost.id }}">
+                        {% if user.is_authenticated %}<button name="edit" class="edit-button text-white" value="{{ udalost.id }}">Editovat</button>{% endif %}
+                        {% if user.is_authenticated %}<button name="delete" class="remove-button" value="{{ udalost.id }}">Odstranit</button> {% endif %}
+                    </td>
+                </form>
                 </tr>
             {% endfor %}
         </tbody>
