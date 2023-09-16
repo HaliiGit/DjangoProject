@@ -58,20 +58,20 @@
             </thead>
             <tbody>
                 {% for pojisteni_pojisteny in pojisteny.pojistenipojisteny_set.all %}
-                <tr>
-                    <td>{{ pojisteni_pojisteny.pojisteni.typ_pojisteni }}</a></td>
-                    <td>{{ pojisteni_pojisteny.cena|intcomma }} Kč</td>
-                    <td>
-                    {% if user.is_authenticated %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <button name="edit_pojisteni" class="edit-button text-white">Editovat</button>
-                        <button name="delete_pojisteni" class="remove-button" value="{{ pojisteni_pojisteny.id }}">Odstranit</button>
-                    </form>
-                    {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
+                    <tr>
+                        <td>{{ pojisteni_pojisteny.pojisteni.typ_pojisteni }}</a></td>
+                        <td>{{ pojisteni_pojisteny.cena|intcomma }} Kč</td>
+                        <td>
+                        {% if user.is_authenticated %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button name="edit_pojisteni" class="edit-button text-white">Editovat</button>
+                            <button name="delete_pojisteni" class="remove-button" value="{{ pojisteni_pojisteny.id }}">Odstranit</button>
+                        </form>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
             </tbody>
         </table>
         {% if is_paginated %}
@@ -90,7 +90,7 @@
                 <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-light text-primary">Další</a></li>
             {% endif %}
           </ul>
-    {% endif %}
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             <div class="d-flex gap-3 justify-content-center">
