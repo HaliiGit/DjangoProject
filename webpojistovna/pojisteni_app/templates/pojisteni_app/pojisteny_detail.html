@@ -65,7 +65,7 @@
                         {% if user.is_authenticated %}
                         <form method="POST">
                             {% csrf_token %}
-                            <button name="edit_pojisteni" class="edit-button text-white">Editovat</button>
+                            <button class="edit-button"><a href="{% url 'edit_pp' pk=pojisteni_pojisteny.pk %}" class="text-white text-decoration-none">Editovat</a></button>
                             <button name="delete_pojisteni" class="remove-button" value="{{ pojisteni_pojisteny.id }}">Odstranit</button>
                         </form>
                         {% endif %}

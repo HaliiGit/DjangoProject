@@ -139,19 +139,19 @@ class PojisteniPojistenyEdit(LoginRequiredMixin, generic.edit.CreateView):
     def get(self, request, pk):
         if not request.user.is_admin:
             messages.info(request, "Nemáte práva pro úpravu pojištěného.")
-            return redirect("pojisteni_index")
+            return redirect("pojisteny_index")
         try:
             pojisteni_pojisteny = PojisteniPojisteny.objects.get(pk=pk)
         except:
             messages.error(request, "Toto pojištění neexistuje!")
-            return redirect("pojisteni_index")
+            return redirect("pojisteny_index")
         form = self.form_class(instance=pojisteni_pojisteny)
         return render(request, self.template_name, {"form": form})
 
     def post(self, request, pk):
         if not request.user.is_admin:
             messages.info(request, "Nemáte práva pro úpravu pojištěnce.")
-            return redirect("pojisteni_index")
+            return redirect("pojisteny_index")
         form = self.form_class(request.POST)
 
         if form.is_valid():
@@ -169,7 +169,7 @@ class PojisteniPojistenyEdit(LoginRequiredMixin, generic.edit.CreateView):
             pojisteni_pojisteny.platnost_do = form.cleaned_data["platnost_do"]
             pojisteni_pojisteny.save()
 
-            return redirect("pojisteni_index")
+            return redirect("pojisteny_index")
         return render(request, self.template_name, {"form": form})
 
 
@@ -200,7 +200,7 @@ class PojistenyCurrent(generic.DetailView):
                 return redirect("edit_pojisteny", pk=self.get_object().pk)
             elif "edit_pojisteni" in request.POST:
                 pojisteni_pojisteny = get_object_or_404(PojisteniPojisteny, pk=pk)
-                return redirect("edit_pp", pk=pojisteni_pojisteny.get_object().pk)
+                return redirect("edit_pp", pk=pojisteni_pojisteny.pk)
             elif "delete_pojisteni" in request.POST:
                 if not request.user.is_admin:
                     messages.info(request, "Nemáte práva pro smazání pojištění.")
